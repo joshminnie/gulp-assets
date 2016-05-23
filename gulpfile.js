@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 
 // Watch all files so that we can trigger auto-streaming the build.
 gulp.task('watch', function() {
-  gulp.watch('javascripts/**/*.js', ['js']);
+  gulp.watch(['javascripts/**/*.js', '.eslintrc.yml', '.eslintignore'], ['js']);
   gulp.watch('stylesheets/sass/**/*.scss', ['css']);
 });
 
@@ -32,10 +32,13 @@ gulp.task('css:compile', function() {
 
 // --------------------------------------------------------
 // JavaScripts
+var eslint = require('gulp-eslint');
 
 // Lints the javascript
 gulp.task('js:lint', function() {
-  return;
+  return gulp.src('javascripts/**/*.js')
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
 
 // Compiles the javascript
