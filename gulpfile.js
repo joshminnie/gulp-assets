@@ -5,6 +5,11 @@ var gulp = require('gulp'),
     rename = require("gulp-rename"),
     scsslint = require('gulp-scss-lint');
 
+gulp.task('watch', function() {
+  gulp.watch('javascripts/*.js', ['js']);
+  gulp.watch('stylesheets/sass/*.scss', ['css']);
+});
+
 // --------------------------------------------------------
 // Stylesheets
 
@@ -40,6 +45,6 @@ gulp.task('js:compile', function() {
 // --------------------------------------------------------
 // Global tasks
 
-gulp.task('default', ['css', 'js']);
+gulp.task('default', ['css', 'js', 'watch']);
 gulp.task('css', ['css:lint', 'css:compile']);
 gulp.task('js', ['js:lint', 'js:compile']);
