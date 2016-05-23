@@ -1,9 +1,5 @@
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssnano = require('gulp-cssnano'),
-    rename = require("gulp-rename"),
-    scsslint = require('gulp-scss-lint');
+    rename = require("gulp-rename");
 
 // Watch all files so that we can trigger auto-streaming the build.
 gulp.task('watch', function() {
@@ -13,6 +9,10 @@ gulp.task('watch', function() {
 
 // --------------------------------------------------------
 // Stylesheets
+var sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    cssnano = require('gulp-cssnano'),
+    scsslint = require('gulp-scss-lint');
 
 // Lints the stylesheet
 gulp.task('css:lint', function() {
