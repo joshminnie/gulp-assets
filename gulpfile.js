@@ -5,9 +5,10 @@ var gulp = require('gulp'),
     rename = require("gulp-rename"),
     scsslint = require('gulp-scss-lint');
 
+// Watch all files so that we can trigger auto-streaming the build.
 gulp.task('watch', function() {
-  gulp.watch('javascripts/*.js', ['js']);
-  gulp.watch('stylesheets/sass/*.scss', ['css']);
+  gulp.watch('javascripts/**/*.js', ['js']);
+  gulp.watch('stylesheets/sass/**/*.scss', ['css']);
 });
 
 // --------------------------------------------------------
@@ -15,18 +16,18 @@ gulp.task('watch', function() {
 
 // Lints the stylesheet
 gulp.task('css:lint', function() {
-  return gulp.src('./stylesheets/sass/*.scss')
+  return gulp.src('stylesheets/sass/**/*.scss')
     .pipe(scsslint());
 });
 
 // Compiles the stylesheet
 gulp.task('css:compile', function() {
-  return gulp.src('./stylesheets/sass/*.scss')
+  return gulp.src('stylesheets/sass/**/*.scss')
     .pipe(sass())
     .pipe(autoprefixer({ browsers: ['> 5%'] }))
     .pipe(cssnano())
     .pipe(rename({ suffix: '.min', extname: '.css' }))
-    .pipe(gulp.dest('./stylesheets/'));
+    .pipe(gulp.dest('stylesheets/'));
 });
 
 // --------------------------------------------------------
