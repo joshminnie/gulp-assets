@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     rename = require("gulp-rename");
 
+var distDirectory = 'dist/';
+
 // Watch all files so that we can trigger auto-streaming the build.
 gulp.task('watch', function() {
   gulp.watch(['javascripts/**/*.js', '.eslintrc.yml', '.eslintignore'], ['js']);
@@ -27,7 +29,7 @@ gulp.task('css:compile', function() {
     .pipe(autoprefixer({ browsers: ['> 5%'] }))
     .pipe(cssnano())
     .pipe(rename({ suffix: '.min', extname: '.css' }))
-    .pipe(gulp.dest('stylesheets/'));
+    .pipe(gulp.dest(distDirectory + 'stylesheets/'));
 });
 
 // --------------------------------------------------------
