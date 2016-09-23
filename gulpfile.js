@@ -1,12 +1,12 @@
 var gulp = require('gulp'),
-    rename = require("gulp-rename");
+    rename = require("gulp-rename"),
+    config = require('./config.json');
 
-var distDirectory = 'dist/';
 
 // Watch all files so that we can trigger auto-streaming the build.
 gulp.task('watch', function() {
-  gulp.watch(['javascripts/**/*.js', '.eslintrc.yml', '.eslintignore'], ['js']);
-  gulp.watch('stylesheets/sass/**/*.scss', ['css']);
+  gulp.watch(config.watch.js, ['js']);
+  gulp.watch(config.watch.css, ['css']);
 });
 
 // --------------------------------------------------------
@@ -16,21 +16,23 @@ var sass = require('gulp-sass'),
     cssnano = require('gulp-cssnano'),
     scsslint = require('gulp-scss-lint');
 
-// Lints the stylesheet
-gulp.task('css:lint', function() {
-  return gulp.src('stylesheets/sass/**/*.scss')
-    .pipe(scsslint());
+// Compiles the *.scss files to *.css
+gulp.task('css:compile', function() {
+  return gulp.src(config.build.sass)
+    .pipe(scsslint())
+    .pipe(sass())
+    .pipe(rename({ suffix: '', extname: '.css' }))
+    .pipe(gulp.dest('build/stylesheets/'));
 });
 
-// Compiles the stylesheet
-gulp.task('css:compile', function() {
-  return gulp.src('stylesheets/sass/**/*.scss')
-    .pipe(sass())
+// Preps and moves the files to the dist directory
+gulp.task('css:dist', ['css:compile'], function() {
+  return gulp.src(config.build.css)
     .pipe(autoprefixer({ browsers: ['> 5%'] }))
     .pipe(cssnano())
-    .pipe(rename({ suffix: '.min', extname: '.css' }))
-    .pipe(gulp.dest(distDirectory + 'stylesheets/'));
+    .pipe(gulp.dest(config.dist.css));
 });
+
 
 // --------------------------------------------------------
 // JavaScripts
@@ -38,7 +40,7 @@ var eslint = require('gulp-eslint');
 
 // Lints the javascript
 gulp.task('js:lint', function() {
-  return gulp.src('javascripts/**/*.js')
+  return gulp.src(config.build.js)
     .pipe(eslint())
     .pipe(eslint.format());
 });
@@ -48,9 +50,15 @@ gulp.task('js:compile', function() {
   return;
 });
 
+gulp.task('js:dist', ['js:compile'], function() {
+  return gulp.src(config.build.js)
+    .pipe(gulp.dest(config.dist.js));
+});
+
+
 // --------------------------------------------------------
 // Global tasks
 
 gulp.task('default', ['css', 'js', 'watch']);
-gulp.task('css', ['css:lint', 'css:compile']);
-gulp.task('js', ['js:lint', 'js:compile']);
+gulp.task('css', ['css:compile', 'css:dist']);
+gulp.task('js', ['js:lint', 'js:compile', 'js:dist']);

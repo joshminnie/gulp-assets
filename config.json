@@ -1,0 +1,33 @@
+{
+  "build": {
+    "sass": [
+      "build/stylesheets/sass/**/*.scss"
+    ],
+    "css": [
+      "build/stylesheets/**/*.css"
+    ],
+    "js": [
+      "build/javascripts/**/*.js"
+    ]
+  },
+
+  "watch": {
+    "css": [
+      "build/stylesheets/sass/**/*.scss",
+      "build/stylesheets/**/*.css",
+      ".scss-lint.yml",
+      "config.json"
+    ],
+    "js": [
+      "build/javascripts/**/*.js",
+      ".eslintrc.yml",
+      ".eslintignore",
+      "config.json"
+    ]
+  },
+
+  "dist": {
+    "css": "dist/stylesheets/",
+    "js": "dist/javascripts/"
+  }
+}
