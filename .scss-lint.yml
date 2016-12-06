@@ -9,6 +9,7 @@ exclude:
   - 'build/stylesheets/sass/bootstrap/*.scss'
   - 'build/stylesheets/sass/bootstrap/bootstrap/*.scss'
   - 'build/stylesheets/sass/font-awesome/*.scss'
+  - 'node_modules/*.scss'
 
 linters:
   BangFormat:
@@ -16,9 +17,15 @@ linters:
     space_before_bang: true
     space_after_bang: false
 
+  BemDepth:
+    enabled: false
+
   BorderZero:
     enabled: true
     convention: zero
+
+  ChainedClasses:
+    enabled: true
 
   ColorKeyword:
     enabled: true
@@ -49,7 +56,8 @@ linters:
     style: same_line
 
   EmptyLineBetweenBlocks:
-    enabled: false
+    enabled: true
+    ignore_single_line_blocks: true
 
   EmptyRule:
     enabled: true
@@ -82,6 +90,7 @@ linters:
 
   Indentation:
     enabled: true
+    allow_non_nested_indentation: false
     character: space
     width: 2
 
@@ -89,8 +98,11 @@ linters:
     enabled: true
     style: include_zero
 
-  MergeableSelector:
+  LengthVariable:
     enabled: true
+
+  MergeableSelector:
+    enabled: false
     force_nesting: true
 
   NameFormat:
@@ -103,7 +115,7 @@ linters:
     max_depth: 5
 
   PlaceholderInExtend:
-    enabled: true
+    enabled: false
 
   PrivateNamingConvention:
     enabled: true
@@ -115,7 +127,7 @@ linters:
 
   PropertySortOrder:
     enabled: true
-    order: smacss
+    order: smacss # See https://github.com/brigade/scss-lint/blob/master/data/property-sort-orders/smacss.txt
     ignore_unspecified: false
     separate_groups: false
 
@@ -138,7 +150,7 @@ linters:
 
   QualifyingElement:
     enabled: true
-    allow_element_with_attribute: false
+    allow_element_with_attribute: true
     allow_element_with_class: false
     allow_element_with_id: false
 
@@ -164,16 +176,22 @@ linters:
     enabled: true
     style: one_space
 
+  SpaceAfterComment:
+    enabled: true
+    allow_empty_comments: true
+    style: one_space
+
   SpaceAfterPropertyColon:
     enabled: true
     style: one_space
 
   SpaceAfterPropertyName:
     enabled: true
+    style: one_space
 
   SpaceAfterVariableColon:
     enabled: true
-    style: at_least_one_space
+    style: one_space
 
   SpaceAfterVariableName:
     enabled: true
@@ -204,6 +222,9 @@ linters:
   TrailingZero:
     enabled: false
 
+  TransitionAll:
+    enabled: true
+
   UnnecessaryMantissa:
     enabled: true
 
@@ -217,10 +238,8 @@ linters:
     enabled: true
 
   VariableForProperty:
-    enabled: true
-    properties:
-      - color
-      - font
+    enabled: false
+    properties: []
 
   VendorPrefix:
     enabled: true
